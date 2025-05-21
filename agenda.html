@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Agenda - Sistema de Agendamentos</title>
+    <!-- Font Awesome for WhatsApp icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <!-- Link to external CSS file -->
+    <link rel="stylesheet" href="style.css">
+
+    <script type="importmap">
+        {
+            "imports": {
+                "firebase/app": "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js",
+                "firebase/analytics": "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js",
+                "firebase/database": "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js"
+            }
+        }
+    </script>
+</head>
+<body>
+    <!-- Main Content Area -->
+    <div id="main-content">
+        <h1>DADOS DO BANCO DE DADOS</h1>
+        <button id="mode-toggle">MODO NOTURNO</button>
+        <button id="logout-button" class="logout-button">SAIR</button>
+        <button id="report-button" class="report-button">GERAR RELATÓRIO</button>
+
+        <!-- Report Controls (hidden by default) -->
+        <div id="report-controls" class="report-controls hidden">
+            <h3>GERAR RELATÓRIO DE CORRIDAS</h3>
+            <div class="report-fields">
+                <div class="report-field">
+                    <label for="report-start-date">DATA INÍCIO:</label>
+                    <input type="date" id="report-start-date">
+                </div>
+                <div class="report-field">
+                    <label for="report-end-date">DATA FIM:</label>
+                    <input type="date" id="report-end-date">
+                </div>
+                <div class="report-field">
+                    <label for="report-driver">MOTORISTA:</label>
+                    <select id="report-driver">
+                        <option value="all">TODOS</option>
+                        <!-- Will be populated with drivers dynamically -->
+                    </select>
+                </div>
+            </div>
+            <div class="report-buttons">
+                <button id="generate-report" class="report-button">VISUALIZAR RELATÓRIO</button>
+                <button id="export-pdf" class="report-button">EXPORTAR PDF</button>
+                <button id="close-report" class="report-button">FECHAR</button>
+            </div>
+        </div>
+
+        <div id="report-results" class="hidden">
+            <h3>RESULTADOS DO RELATÓRIO</h3>
+            <div id="report-data"></div>
+            <p id="report-total">VALOR TOTAL: R$ 0,00</p>
+        </div>
+
+        <div id="data-container">
+            <p>CARREGANDO DADOS...</p>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div id="driver-selection-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>SELECIONAR MOTORISTA</h2>
+            <p>Para Booking ID: <strong id="modal-booking-id-selection"></strong></p>
+            <div id="driver-list">
+                <!-- Driver list will be populated here -->
+                <p>Carregando motoristas...</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="transfer-details-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>DETALHES DA TRANSFERÊNCIA</h2>
+             <p>Para Booking ID: <strong id="modal-booking-id-details"></strong></p>
+            <p id="modal-assigned-driver">MOTORISTA:</p>
+            <p id="modal-assigned-plate">PLACA:</p>
+            <p id="modal-assigned-color">COR:</p>
+            <p id="modal-assigned-model">MODELO:</p>
+        </div>
+    </div>
+
+    <!-- Link to modular JavaScript files -->
+    <script type="module" src="js/config.js"></script>
+    <script type="module" src="js/utils.js"></script>
+    <script type="module" src="js/auth.js"></script>
+    <script type="module" src="js/booking-handlers.js"></script>
+    <script type="module" src="js/booking-elements/phone-element.js"></script>
+    <script type="module" src="js/booking-elements/location-element.js"></script>
+    <script type="module" src="js/booking-elements/status-element.js"></script>
+    <script type="module" src="js/booking-elements/driver-element.js"></script>
+    <script type="module" src="js/booking-renderer.js"></script>
+    <script type="module" src="js/booking-display.js"></script>
+    <script type="module" src="js/modals.js"></script>
+    <script type="module" src="js/reports.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+    <script type="module" src="js/agenda.js"></script>
+</body>
+</html>

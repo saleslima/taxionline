@@ -1,75 +1,45 @@
-<!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Top Ações B3</title>
-  <style>
-    body { font-family: Arial, sans-serif; margin: 0; padding: 20px; }
-    h1 { text-align: center; }
-    .acoes-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; margin-top: 20px; }
-    .acao { border: 1px solid #ccc; padding: 15px; border-radius: 8px; cursor: pointer; transition: 0.3s; }
-    .acao:hover { background-color: #f0f0f0; }
-    .rodape { position: fixed; bottom: 0; left: 0; right: 0; background: #333; color: #fff; overflow: hidden; white-space: nowrap; padding: 10px; }
-    .scrolling { display: inline-block; animation: scroll 20s linear infinite; }
-    @keyframes scroll {
-      0% { transform: translateX(100%); }
-      100% { transform: translateX(-100%); }
-    }
-    .detalhes { margin-top: 30px; padding: 15px; border: 1px solid #ccc; display: none; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Login - Sistema de Agendamentos</title>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <!-- Link to external CSS file -->
+    <link rel="stylesheet" href="style.css">
+
+    <script type="importmap">
+        {
+            "imports": {
+                "firebase/app": "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js",
+                "firebase/analytics": "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js",
+                "firebase/database": "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js"
+            }
+        }
+    </script>
 </head>
 <body>
-  <h1>Top 10 Ações da B3</h1>
-  <div class="acoes-grid" id="top-acoes"></div>
-  <div class="detalhes" id="detalhes"></div>
 
-  <div class="rodape">
-    <div class="scrolling" id="outras-acoes"></div>
-  </div>
+    <!-- Login Form -->
+    <div id="login-container">
+        <h2>LOGIN</h2>
+        <input type="text" id="username" placeholder="Usuário">
+        <input type="password" id="password" placeholder="Senha">
+        <button id="login-button">ENTRAR</button>
+        <p id="login-error" class="error-message"></p>
+    </div>
 
-  <script>
-    const topAcoes = ["VALE3", "PETR4", "ITUB4", "BBDC4", "ABEV3", "WEGE3", "BBAS3", "RENT3", "LREN3", "MGLU3"];
-    const outrasAcoes = ["BRFS3", "ELET3", "AZUL4", "GGBR4", "HAPV3", "GOLL4", "NTCO3", "SUZB3", "PRIO3", "RAIL3"];
-
-    async function carregarTopAcoes() {
-      const res = await fetch(`https://brapi.dev/api/quote/${topAcoes.join(",")}`);
-      const data = await res.json();
-      const container = document.getElementById("top-acoes");
-      data.results.forEach(acao => {
-        const div = document.createElement("div");
-        div.className = "acao";
-        div.innerHTML = `<strong>${acao.stock}</strong><br>R$ ${acao.regularMarketPrice.toFixed(2)}<br>${acao.regularMarketChangePercent.toFixed(2)}%`;
-        div.onclick = () => mostrarDetalhes(acao.stock);
-        container.appendChild(div);
-      });
-    }
-
-    async function carregarOutrasAcoes() {
-      const res = await fetch(`https://brapi.dev/api/quote/${outrasAcoes.join(",")}`);
-      const data = await res.json();
-      const ticker = data.results.map(a => `${a.stock}: R$ ${a.regularMarketPrice.toFixed(2)} (${a.regularMarketChangePercent.toFixed(2)}%)`).join(" | ");
-      document.getElementById("outras-acoes").textContent = ticker;
-    }
-
-    async function mostrarDetalhes(codigo) {
-      const res = await fetch(`https://brapi.dev/api/quote/${codigo}?range=1y&interval=1mo`);
-      const data = await res.json();
-      const valores = data.results[0].historicalDataPrice.map(p => p.close);
-      const atual = data.results[0].regularMarketPrice;
-      const media = valores.reduce((a, b) => a + b, 0) / valores.length;
-      let status = atual < media * 0.95 ? "BARATA" : (atual > media * 1.05 ? "CARA" : "JUSTA");
-      document.getElementById("detalhes").style.display = "block";
-      document.getElementById("detalhes").innerHTML = `
-        <h3>${codigo}</h3>
-        Preço atual: R$ ${atual.toFixed(2)}<br>
-        Média (12 meses): R$ ${media.toFixed(2)}<br>
-        Avaliação: <strong>${status}</strong>
-      `;
-    }
-
-    carregarTopAcoes();
-    carregarOutrasAcoes();
-  </script>
+    <!-- Link to modular JavaScript files -->
+    <script type="module" src="js/config.js"></script>
+    <script type="module" src="js/utils.js"></script>
+    <script type="module" src="js/auth.js"></script>
+    <script type="module">
+        // Initialize login functionality
+        import { initLoginPage } from './js/auth.js';
+        document.addEventListener('DOMContentLoaded', () => {
+            initLoginPage();
+        });
+    </script>
 </body>
 </html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Gerenciamento de Motoristas</title>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <!-- Link to external CSS file -->
+    <link rel="stylesheet" href="style.css">
+
+    <script type="importmap">
+        {
+            "imports": {
+                "firebase/app": "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js",
+                "firebase/analytics": "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js",
+                "firebase/database": "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js"
+            }
+        }
+    </script>
+</head>
+<body>
+    <!-- Admin Driver Management Area -->
+    <div id="admin-driver-management">
+        <h1>GERENCIAMENTO DE MOTORISTAS</h1>
+        <button id="mode-toggle-admin">MODO NOTURNO</button>
+        <button id="logout-button" class="logout-button">SAIR</button>
+        
+        <button id="list-drivers-button">LISTAR MOTORISTAS</button>
+        <div id="driver-list-container">
+            <!-- Driver list will be populated here -->
+        </div>
+        
+        <div id="driver-registration-form">
+            <h2>CADASTRAR NOVO MOTORISTA</h2>
+            <input type="hidden" id="current-driver-id"> 
+            <input type="text" id="driver-name" placeholder="Nome Completo" required>
+            <input type="text" id="driver-plate" placeholder="Placa do Veículo" required>
+            <input type="text" id="driver-model" placeholder="Modelo do Veículo" required>
+            <input type="text" id="driver-color" placeholder="Cor do Veículo" required>
+            <input type="number" id="driver-year" placeholder="Ano do Veículo">
+            <input type="text" id="driver-whatsapp" placeholder="Número WhatsApp (apenas números)">
+            <input type="text" id="driver-username" placeholder="Usuário para Login" required>
+            <input type="password" id="driver-password" placeholder="Senha para Login" required>
+            
+            <button id="register-driver-button">CADASTRAR MOTORISTA</button>
+            <button id="edit-driver-button" class="hidden">SALVAR ALTERAÇÕES</button>
+            <button id="delete-driver-button" class="hidden">EXCLUIR MOTORISTA</button>
+            <button id="cancel-edit-button" class="hidden">CANCELAR</button>
+            
+            <p id="registration-message" class="error-message"></p>
+        </div>
+    </div>
+
+    <!-- Link to modular JavaScript files -->
+    <script type="module" src="js/config.js"></script>
+    <script type="module" src="js/utils.js"></script>
+    <script type="module" src="js/auth.js"></script>
+    <script type="module" src="js/driver-management.js"></script>
+    <script type="module" src="js/motorista.js"></script>
+</body>
+</html>

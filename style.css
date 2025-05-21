@@ -1,0 +1,756 @@
+body {
+    font-family: sans-serif;
+    line-height: 1.6;
+    margin: 20px;
+    background-color: #f4f4f4;
+    color: #333;
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition for dark mode */
+}
+
+h1, h2 {
+    color: #333;
+    text-align: center;
+    margin-bottom: 30px;
+    transition: color 0.3s ease; /* Smooth transition */
+}
+
+#data-container,
+#admin-driver-management {
+    max-width: 800px;
+    margin: 20px auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+}
+
+.data-item {
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+}
+
+.data-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.data-item h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #555;
+    transition: color 0.3s ease;
+}
+
+/* Style for inline details (Name, Date, Time) */
+.inline-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 10px;
+}
+
+.inline-details p {
+    margin: 0;
+    color: inherit;
+}
+
+/* New style for the location container */
+.location-container {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+}
+
+/* Style for location details (Start and Destination) */
+.location-detail {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    color: inherit;
+}
+
+/* Container for Phone and Status */
+.phone-status-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.data-item p {
+    color: inherit;
+}
+
+.whatsapp-info {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.whatsapp-link {
+    color: #25d366;
+    text-decoration: none;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+
+.whatsapp-link i {
+    font-size: 1.2em;
+}
+
+.distance-note {
+    font-style: italic;
+    color: #777;
+    font-size: 0.9em;
+    margin-top: 5px;
+}
+
+/* Style for the status select */
+.status-select-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-right: 15px;
+}
+
+.status-select-container label {
+    font-weight: bold;
+    color: inherit;
+    transition: color 0.3s ease;
+}
+
+.status-select-container select {
+    padding: 5px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-size: 1em;
+    background-color: #fff;
+    color: #333;
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+.status-select-container select:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.copy-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9em;
+    margin-top: 10px;
+    transition: background-color 0.2s ease;
+}
+
+.copy-button:hover {
+    background-color: #0056b3;
+}
+
+.copy-button:active {
+    background-color: #003f7f;
+}
+
+.copy-button.copied {
+    background-color: #28a745;
+}
+
+/* Dark Mode Styles */
+body.dark-mode {
+    background-color: #1e1e1e;
+    color: #eee;
+}
+
+body.dark-mode h1,
+body.dark-mode h2 {
+    color: #eee;
+}
+
+body.dark-mode #data-container,
+body.dark-mode #admin-driver-management {
+    background: #2e2e2e;
+    color: #eee;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+body.dark-mode .data-item {
+    border-bottom-color: #444;
+}
+
+body.dark-mode .data-item h3 {
+    color: #ddd;
+}
+
+body.dark-mode .status-select-container label {
+    color: #eee;
+}
+
+body.dark-mode .status-select-container select {
+    background-color: #3e3e3e;
+    color: #eee;
+    border-color: #555;
+}
+
+body.dark-mode .location-container {
+    border-top-color: #444;
+}
+
+/* Style for new scheduled bookings */
+.scheduled-booking {
+    background-color: rgba(40, 167, 69, 0.2); /* Light green background */
+}
+
+/* Flash Animation for unscheduled bookings */
+@keyframes flash {
+    0% { background-color: rgba(255, 0, 0, 0.2); }
+    50% { background-color: rgba(255, 0, 0, 0.4); }
+    100% { background-color: rgba(255, 0, 0, 0.2); }
+}
+
+.unscheduled-booking {
+    animation: flash 1.5s ease-in-out infinite;
+}
+
+/* New Booking Flash Animation */
+@keyframes newBookingFlash {
+    0% { border-color: rgba(255, 0, 0, 0.5); }
+    50% { border-color: rgba(255, 0, 0, 1); }
+    100% { border-color: rgba(255, 0, 0, 0.5); }
+}
+
+.new-booking {
+    animation: newBookingFlash 1s ease-in-out infinite;
+    border: 2px solid red;
+}
+
+/* Dark mode adjustments */
+body.dark-mode .scheduled-booking {
+    background-color: rgba(40, 167, 69, 0.3); /* Darker green background for dark mode */
+}
+
+/* Login Form Styles */
+#login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 80vh;
+}
+
+#login-container h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+#login-container input[type="text"],
+#login-container input[type="password"] {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 250px;
+}
+
+#login-container button,
+#admin-driver-management button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.2s ease;
+}
+
+#login-container button:hover,
+#admin-driver-management button:hover {
+    background-color: #0056b3;
+}
+
+.hidden {
+    display: none;
+}
+
+.error-message {
+    color: red;
+    margin-top: 10px;
+    font-size: 0.9em;
+}
+
+/* Admin Driver Management Styles */
+#admin-driver-management {
+    max-width: 800px;
+    margin: 20px auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+}
+
+#admin-driver-management h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#list-drivers-button {
+    display: block; /* Make button full width or adjust as needed */
+    width: fit-content;
+    margin: 0 auto 20px auto; /* Center the button */
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.2s ease;
+}
+
+#list-drivers-button:hover {
+     background-color: #0056b3;
+}
+
+#driver-list-container {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+    max-height: 200px; /* Limit height to make it scrollable */
+    overflow-y: auto; /* Add scroll if list is long */
+    margin-bottom: 20px;
+}
+
+.driver-list-item {
+    padding: 8px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.driver-list-item:last-child {
+    border-bottom: none;
+}
+
+.driver-list-item:hover {
+    background-color: #f0f0f0;
+}
+
+/* Dark mode styles for driver list */
+body.dark-mode #admin-driver-management {
+    background: #2e2e2e;
+    color: #eee;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+body.dark-mode #admin-driver-management h1 {
+     color: #eee;
+}
+
+body.dark-mode #list-drivers-button {
+    background-color: #0056b3;
+}
+
+body.dark-mode #list-drivers-button:hover {
+     background-color: #003f7f;
+}
+
+body.dark-mode #driver-list-container {
+    border-top-color: #444;
+}
+
+body.dark-mode .driver-list-item {
+    border-bottom-color: #444;
+}
+
+body.dark-mode .driver-list-item:hover {
+    background-color: #3e3e3e;
+}
+
+/* Admin Driver Registration Form Styles */
+#driver-registration-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+#driver-registration-form h2 {
+    margin-bottom: 15px;
+    color: #333;
+    text-align: left;
+}
+
+#driver-registration-form input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1em;
+    background-color: #fff;
+    color: #333;
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+#driver-registration-form button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.2s ease;
+    margin-top: 5px; /* Add space between buttons */
+}
+
+#driver-registration-form button:hover {
+    background-color: #0056b3;
+}
+
+#edit-driver-button {
+     background-color: #ffc107; /* Warning yellow */
+     color: #333;
+}
+
+#edit-driver-button:hover {
+    background-color: #e0a800;
+}
+
+#delete-driver-button {
+     background-color: #dc3545; /* Danger red */
+}
+
+#delete-driver-button:hover {
+    background-color: #c82333;
+}
+
+#cancel-edit-button {
+    background-color: #6c757d; /* Secondary grey */
+}
+
+#cancel-edit-button:hover {
+    background-color: #5a6268;
+}
+
+/* Dark mode styles for driver registration form */
+body.dark-mode #driver-registration-form h2 {
+    color: #eee;
+}
+
+body.dark-mode #driver-registration-form {
+    border-top-color: #444;
+}
+
+body.dark-mode #driver-registration-form input {
+    background-color: #3e3e3e;
+    color: #eee;
+    border-color: #555;
+}
+
+body.dark-mode #registration-message {
+    color: #ff7f7f;
+}
+
+body.dark-mode #driver-registration-form button {
+     background-color: #0056b3;
+}
+
+body.dark-mode #driver-registration-form button:hover {
+     background-color: #003f7f;
+}
+
+body.dark-mode #edit-driver-button {
+     background-color: #e0a800;
+}
+
+body.dark-mode #edit-driver-button:hover {
+    background-color: #c89100;
+}
+
+body.dark-mode #delete-driver-button {
+     background-color: #c82333;
+}
+
+body.dark-mode #delete-driver-button:hover {
+    background-color: #b51b2b;
+}
+
+body.dark-mode #cancel-edit-button {
+    background-color: #5a6268;
+}
+
+body.dark-mode #cancel-edit-button:hover {
+    background-color: #4d545c;
+}
+
+/* Ensure buttons appear inline if needed, or keep them stacked as flex column does */
+/* If you want buttons inline, you might need a button container div */
+#driver-registration-form .button-container {
+    display: flex;
+    gap: 10px; /* Space between buttons */
+    justify-content: flex-start; /* Align buttons to the left */
+    flex-wrap: wrap; /* Allow wrapping on small screens */
+}
+
+#driver-registration-form .button-container button {
+    margin-top: 0; /* Reset margin-top if using container */
+}
+
+/* Helper classes */
+.hidden {
+    display: none;
+}
+
+/* Logout Button */
+.logout-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.logout-button:hover {
+    background-color: #c82333;
+}
+
+body.dark-mode .logout-button {
+    background-color: #c82333;
+}
+
+body.dark-mode .logout-button:hover {
+    background-color: #b51b2b;
+}
+
+/* Fare Input */
+.fare-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 10px;
+}
+
+.fare-input {
+    width: 100px;
+    padding: 5px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+/* Booking Actions Buttons */
+.booking-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.complete-button, .delete-button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.complete-button {
+    background-color: #28a745;
+}
+
+.complete-button:hover {
+    background-color: #218838;
+}
+
+.delete-button {
+    background-color: #dc3545;
+}
+
+.delete-button:hover {
+    background-color: #c82333;
+}
+
+/* Report Controls */
+.report-controls {
+    margin: 20px 0;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.report-fields {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.report-field {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.report-field label {
+    font-weight: bold;
+}
+
+.report-field input, .report-field select {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.report-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.report-button {
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.report-button:hover {
+    background-color: #0056b3;
+}
+
+/* Dark mode adjustments */
+body.dark-mode .report-controls {
+    background-color: #2e2e2e;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+body.dark-mode .report-field input, 
+body.dark-mode .report-field select,
+body.dark-mode .fare-input {
+    background-color: #3e3e3e;
+    color: #eee;
+    border-color: #555;
+}
+
+/* Responsive Design - Mobile Devices */
+@media (max-width: 768px) {
+    body {
+        margin: 10px;
+    }
+
+    h1, h2 {
+        font-size: 1.5rem;
+    }
+
+    #data-container,
+    #admin-driver-management {
+        padding: 15px;
+        max-width: 100%;
+    }
+
+    .inline-details {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .phone-status-container {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .status-select-container {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .status-select-container select {
+        flex-grow: 1;
+        max-width: 70%;
+    }
+
+    #login-container input[type="text"],
+    #login-container input[type="password"],
+    #driver-registration-form input {
+        width: 100%;
+        max-width: 300px;
+    }
+    
+    .logout-button {
+        position: static;
+        display: block;
+        margin: 10px 0;
+        width: fit-content;
+    }
+    
+    /* Add styles for #mode-toggle and #mode-toggle-admin */
+    #mode-toggle,
+    #mode-toggle-admin {
+        position: static;
+        display: block;
+        margin: 10px 0;
+        width: fit-content;
+    }
+    
+    .driver-item {
+        padding: 10px;
+    }
+    
+    /* Modal adjustments for mobile */
+    .modal-content {
+        width: 90%;
+        max-width: 350px;
+        padding: 15px;
+    }
+    
+    .report-fields {
+        flex-direction: column;
+    }
+    
+    .report-field {
+        width: 100%;
+    }
+    
+    .report-buttons {
+        flex-direction: column;
+    }
+    
+    .fare-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+/* For very small screens */
+@media (max-width: 480px) {
+    .data-item {
+        padding: 10px;
+    }
+    
+    .whatsapp-link {
+        padding: 8px;
+    }
+    
+    .copy-button {
+        width: 100%;
+    }
+}
